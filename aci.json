@@ -30,7 +30,7 @@
         
        "containers": [
           {
-            "name": "[concat(parameters('siteName'),'aci')]",
+            "name": "[concat(parameters('siteName'),'-aci')]",
             "properties": {
               "command": [
                 "az",
