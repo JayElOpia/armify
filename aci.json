@@ -16,7 +16,19 @@
         "type": "SystemAssigned"
       },
       "properties": {
-        "containers": [
+        "ipAddress": 
+              {
+                    "ports": [
+                        {
+                            "protocol": "TCP",
+                            "port": 8080
+                        }
+                    ],
+                    "ip": "10.6.3.4",
+                    "type": "Private"
+              }, 
+        
+       "containers": [
           {
             "name": "[concat(parameters('siteName'),'-aci')]",
             "properties": {
@@ -25,17 +37,6 @@
                 "--help"
               ],
               "image": "microsoft/azure-cli",
-              "ipAddress": 
-              {
-                    "ports": [
-                        {
-                            "protocol": "TCP",
-                            "port": 8080
-                        }
-                    ],
-                    "ip": "",
-                    "type": "Private"
-                },
               "resources": {
                 "requests": {
                   "cpu": 1,
