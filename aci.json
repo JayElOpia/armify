@@ -61,16 +61,8 @@
           {
             "name": "[parameters('subnetName')]",
             "properties": {
-              "addressPrefix": "[parameters('subnetAddressPrefix')]",
-              "delegations": [
-                {
-                  "name": "DelegationService",
-                  "properties": {
-                    "serviceName": "Microsoft.ContainerInstance/containerGroups"
-                  }
-                }
-              ]
-            }
+              "addressPrefix": "[parameters('subnetAddressPrefix')]"
+              }
           }
         ]
       }
