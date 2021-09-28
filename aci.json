@@ -11,8 +11,7 @@
   "parameters": 
   {
     "siteName": 
-    {
-      "type": "string"
+    {"type": "string"
     },
    "subnetName": 
    {
@@ -29,11 +28,53 @@
       "metadata": {
         "description": "VNet name" 
       }
+    },
+   "vnetAddressPrefix": {
+      "type": "string",
+      "defaultValue": "10.6.0.0/16",
+      "metadata": {
+        "description": "Address prefix"
+      }
+    },
+    "subnetAddressPrefix": {
+      "type": "string",
+      "defaultValue": "10.6.3.0/24",
+      "metadata": {
+        "description": "Subnet prefix"
+      }
     }
   },
   "resources":
   [
-     {
+  {
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('vnetName')]",
+      "apiVersion": "2020-05-01",
+      "location": "West Europe",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('vnetAddressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('subnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnetAddressPrefix')]",
+              "delegations": [
+                {
+                  "name": "DelegationService",
+                  "properties": {
+                    "serviceName": "Microsoft.ContainerInstance/containerGroups"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },     {
       "type": "Microsoft.ContainerInstance/containerGroups",
       "apiVersion": "2018-10-01",
       "name": "[concat(parameters('siteName'), '-aci')]",
@@ -85,7 +126,7 @@
       "apiVersion": "2020-05-01",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-         "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]" ],
+        "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]" ],
       "properties": {
         "containerNetworkInterfaceConfigurations": [
           {
