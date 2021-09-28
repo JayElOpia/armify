@@ -85,8 +85,7 @@
       "properties": {
         "networkProfile": {
                     "id": "[resourceId('Microsoft.Network/networkProfiles', variables('networkProfileName'))]"},
-        "sku": "Standard",
-        "ipAddress": 
+          "ipAddress": 
               {
                     "ports": [
                         {
