@@ -10,9 +10,15 @@
 
   "parameters": 
   {
-    
-    "siteName": 
+   "siteName": 
     {"type": "string"
+    },
+    "port": {
+      "type": "string",
+      "metadata": {
+        "description": "Port to open on the container."
+      },
+      "defaultValue": "8080"
     },
    "subnetName": 
    {
@@ -83,7 +89,7 @@
                  "ports": [
                         {
                             "protocol": "TCP",
-                            "port": 8080
+                           "port": "[parameters('port')]"
                         }
                     ],
                     "ip": "10.6.3.4",
@@ -115,7 +121,7 @@
     {
       "type": "Microsoft.Network/networkProfiles",
       "name": "[variables('networkProfileName')]",
-      "apiVersion": "2018-08-01",
+      "apiVersion": "2019-04-01",
       "location": "[resourceGroup().location]",
       "properties": {
         "containerNetworkInterfaceConfigurations": [
