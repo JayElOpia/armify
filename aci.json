@@ -4,12 +4,13 @@
   "variables": 
   {
     "networkProfileName": "aci-networkProfile",
-    "interfaceConfigName": "eth1",
+    "interfaceConfigName": "eth0",
     "interfaceIpConfig": "ipconfigprofile1"
   },
 
   "parameters": 
   {
+    
     "siteName": 
     {"type": "string"
     },
@@ -49,7 +50,7 @@
   {
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[parameters('vnetName')]",
-      "apiVersion": "2020-05-01",
+      "apiVersion": "2019-04-01",
       "location": "West Europe",
       "properties": {
         "addressSpace": {
@@ -114,7 +115,7 @@
     {
       "type": "Microsoft.Network/networkProfiles",
       "name": "[variables('networkProfileName')]",
-      "apiVersion": "2020-05-01",
+      "apiVersion": "2019-04-01",
       "location": "[resourceGroup().location]",
       "properties": {
         "containerNetworkInterfaceConfigurations": [
