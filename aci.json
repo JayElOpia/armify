@@ -125,8 +125,8 @@
       "name": "[variables('networkProfileName')]",
       "apiVersion": "2020-05-01",
       "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]" ],
+      /*"dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]" ],*/
       "properties": {
         "containerNetworkInterfaceConfigurations": [
           {
