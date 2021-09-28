@@ -4,7 +4,7 @@
   "variables": 
   {
     "networkProfileName": "aci-networkProfile",
-    "interfaceConfigName": "eth0",
+    "interfaceConfigName": "eth1",
     "interfaceIpConfig": "ipconfigprofile1"
   },
 
