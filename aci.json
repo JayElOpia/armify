@@ -79,7 +79,13 @@
                     "id": "[resourceId('Microsoft.Network/networkProfiles', variables('networkProfileName'))]"},
           "ipAddress": 
               {
-                                      "ip": "10.6.3.4",
+                 "ports": [
+                        {
+                            "protocol": "TCP",
+                            "port": 8080
+                        }
+                    ],
+                    "ip": "10.6.3.4",
                     "type": "Private"
               }, 
         
