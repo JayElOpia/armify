@@ -50,7 +50,7 @@
   {
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[parameters('vnetName')]",
-      "apiVersion": "2019-04-01",
+      "apiVersion": "2018-08-01",
       "location": "West Europe",
       "properties": {
         "addressSpace": {
@@ -115,7 +115,7 @@
     {
       "type": "Microsoft.Network/networkProfiles",
       "name": "[variables('networkProfileName')]",
-      "apiVersion": "2019-04-01",
+      "apiVersion": "2018-08-01",
       "location": "[resourceGroup().location]",
       "properties": {
         "containerNetworkInterfaceConfigurations": [
