@@ -62,15 +62,14 @@
   [
   {
       "type": "Microsoft.ContainerInstance/containerGroups",
-      "apiVersion": "2019-12-01",
+      "apiVersion": "2018-10-01",
       "name": "[concat(parameters('siteName'), '-aci')]",
       "location": "[resourceGroup().location]",
       "identity": {
         "type": "SystemAssigned"
       },
       "properties": {
-        //"sku": "Standard",
-        "networkProfile": {
+               "networkProfile": {
                     "id": "[resourceId('Microsoft.Network/networkProfiles', variables('networkProfileName'))]"},
           "ipAddress": 
               {
