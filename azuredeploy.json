@@ -78,36 +78,9 @@
             }
           }
         }
-     },
-     
-     {
-        "apiVersion": "2017-05-10",
-        "name": "linkedAciContainerTemplate",
-        "type": "Microsoft.Resources/deployments",
-        "dependsOn": [
-          "linkedAciTemplate"
-        ],
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[uri(parameters('_artifactsLocation'), concat('aci-import.json', parameters('_artifactsLocationSasToken')))]",
-            "contentVersion": "1.0.0.0"
-          },
-          "parameters":
-           {
-            "siteName": 
-            {
-              "value": "[parameters('siteName')]"
-            },
-            "acrName": 
-            {
-              "value": "[variables('acrName')]"
-            }         
-            
-          }
-          }
-         
      }
+     
+    
 
     ]
   
