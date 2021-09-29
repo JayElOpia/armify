@@ -4,11 +4,18 @@
   "variables": 
   {
     "networkProfileName": "aci-networkProfile",
+    "script": "[concat('( sleep 5 ; az login --identity ; az acr import --name ', parameters('acrName'), ' --source docker.io/jayelopia/rating:v1 --image rating:v1 )')]",
+
     "interfaceConfigName": "eth0",
     "interfaceIpConfig": "ipconfigprofile1"
   },
- "parameters": 
-  {
+
+  "parameters": 
+{
+  "acrName": {
+      "type": "string"
+    },
+ 
    "siteName": 
     {"type": "string"
     },
@@ -52,15 +59,36 @@
   },
   "resources":
   [
-     {
+  {
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('vnetName')]",
+      "apiVersion": "2018-08-01",
+      "location": "West Europe",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('vnetAddressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('subnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnetAddressPrefix')]"
+              }
+          }
+        ]
+      }
+    },     {
       "type": "Microsoft.ContainerInstance/containerGroups",
-      "apiVersion": "2018-10-01",
+      "apiVersion": "2021-03-01",
       "name": "[concat(parameters('siteName'), '-aci')]",
       "location": "[resourceGroup().location]",
       "identity": {
         "type": "SystemAssigned"
       },
       "properties": {
+        "sku": "Standard",
         "networkProfile": {
                     "id": "[resourceId('Microsoft.Network/networkProfiles', variables('networkProfileName'))]"},
           "ipAddress": 
@@ -80,8 +108,9 @@
             "name": "[concat(parameters('siteName'),'-aci')]",
             "properties": {
               "command": [
-                "az",
-                "--help"
+                "sh",
+                "-c",
+                "[variables('script')]"
               ],
               "image": "microsoft/azure-cli",
               "resources": {
@@ -124,3 +153,4 @@
     }
   ]
 }
+
