@@ -4,18 +4,12 @@
   "variables": 
   {
     "networkProfileName": "aci-networkProfile",
-    "script": "[concat('( sleep 5 ; az login --identity ; az acr import --name ', parameters('acrName'), ' --source docker.io/jayelopia/rating:v1 --image rating:v1 )')]",
-
     "interfaceConfigName": "eth0",
     "interfaceIpConfig": "ipconfigprofile1"
   },
 
   "parameters": 
 {
-  "acrName": {
-      "type": "string",
-      "defaultValue" :"superHeroRatingacr"
-    },
  
    "siteName": 
     {"type": "string"
@@ -87,12 +81,7 @@
           {
             "name": "[concat(parameters('siteName'),'-aci')]",
             "properties": {
-              "command": [
-                "sh",
-                "-c",
-                "[variables('script')]"
-              ],
-              "image": "microsoft/azure-cli",
+               "image": "docker.io/jayelopia/rating:v1 --image rating:v1",
                "ports": [
                                 {
                                     "protocol": "TCP",
