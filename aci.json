@@ -69,7 +69,7 @@
         "type": "SystemAssigned"
       },
       "properties": {
-        "sku": "Standard",
+        //"sku": "Standard",
         "networkProfile": {
                     "id": "[resourceId('Microsoft.Network/networkProfiles', variables('networkProfileName'))]"},
           "ipAddress": 
