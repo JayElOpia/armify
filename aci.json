@@ -53,27 +53,134 @@
   },
   "resources":
   [
-  {
-      "type": "Microsoft.Network/virtualNetworks",
-      "name": "[parameters('vnetName')]",
-      "apiVersion": "2018-08-01",
-      "location": "West Europe",
+     {
+      "type": "Microsoft.ContainerInstance/containerGroups",
+      "apiVersion": "2018-10-01",
+      "name": "[concat(parameters('siteName'), '-aci')]",
+      "location": "[resourceGroup().location]",
+      "identity": {
+        "type": "SystemAssigned"
+      },
       "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[parameters('vnetAddressPrefix')]"
-          ]
-        },
-        "subnets": [
+        "networkProfile": {
+                    "id": "[resourceId('Microsoft.Network/networkProfiles', variables('networkProfileName'))]"},
+          "ipAddress": 
+              {
+                 "ports": [
+                        {
+                            "protocol": "TCP",
+                           "port": "[parameters('port')]"
+                        }
+                    ],
+                    "ip": "10.6.3.4",
+                    "type": "Private"
+              }, 
+        
+       "containers": [
           {
-            "name": "[parameters('subnetName')]",
+            "name": "[concat(parameters('siteName'),'-aci')]",
             "properties": {
-              "addressPrefix": "[parameters('subnetAddressPrefix')]"
+              "command": [
+                "az",
+                "--help"
+              ],
+              "image": "microsoft/azure-cli",
+              "resources": {
+                "requests": {
+                  "cpu": 1,
+                  "memoryInGB": 1
+                }
               }
+            }
+          }
+        ],
+        "osType": "Linux",
+        "restartPolicy": "Never"
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkProfiles",
+      "name": "[variables('networkProfileName')]",
+      "apiVersion": "2019-04-01",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "containerNetworkInterfaceConfigurations": [
+          {
+            "name": "[variables('interfaceConfigName')]",
+            "properties": {
+              "ipConfigurations": [
+                {
+                  "name": "[variables('interfaceIpConfig')]",
+                  "properties": {
+                    "subnet": {
+                      "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]"
+                    }
+                  }
+                }
+              ]
+            }
           }
         ]
       }
-    },     {
+    }
+  ]
+}
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "variables": 
+  {
+    "networkProfileName": "aci-networkProfile",
+    "interfaceConfigName": "eth0",
+    "interfaceIpConfig": "ipconfigprofile1"
+  },
+
+  "parameters": 
+  {
+   "siteName": 
+    {"type": "string"
+    },
+    "port": {
+      "type": "string",
+      "metadata": {
+        "description": "Port to open on the container."
+      },
+      "defaultValue": "8080"
+    },
+   "subnetName": 
+   {
+      "type": "string",
+      "defaultValue": "subnet-web",
+      "metadata": {
+        "description": "Web subnet name"
+      }
+    },
+    "vnetName":
+     {
+      "type": "string",
+      "defaultValue": "vnet-sep-t2-arm-we",
+      "metadata": {
+        "description": "VNet name" 
+      }
+    },
+   "vnetAddressPrefix": {
+      "type": "string",
+      "defaultValue": "10.6.0.0/16",
+      "metadata": {
+        "description": "Address prefix"
+      }
+    },
+    "subnetAddressPrefix": {
+      "type": "string",
+      "defaultValue": "10.6.3.0/24",
+      "metadata": {
+        "description": "Subnet prefix"
+      }
+    }
+  },
+  "resources":
+  [
+     {
       "type": "Microsoft.ContainerInstance/containerGroups",
       "apiVersion": "2018-10-01",
       "name": "[concat(parameters('siteName'), '-aci')]",
