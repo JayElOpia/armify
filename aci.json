@@ -60,7 +60,7 @@
   },
   "resources":
   [
-     {
+  {
       "type": "Microsoft.ContainerInstance/containerGroups",
       "apiVersion": "2021-03-01",
       "name": "[concat(parameters('siteName'), '-aci')]",
@@ -76,7 +76,7 @@
               {
                  "ports": [
                         {
-                            "protocol": "TCP",
+                           "protocol": "TCP",
                            "port": "[parameters('port')]"
                         }
                     ],
@@ -94,6 +94,12 @@
                 "[variables('script')]"
               ],
               "image": "microsoft/azure-cli",
+               "ports": [
+                                {
+                                    "protocol": "TCP",
+                                    "port": 8080
+                                }
+               ],
               "resources": {
                 "requests": {
                   "cpu": 1,
