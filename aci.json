@@ -60,27 +60,7 @@
   },
   "resources":
   [
-  {
-      "type": "Microsoft.Network/virtualNetworks",
-      "name": "[parameters('vnetName')]",
-      "apiVersion": "2018-08-01",
-      "location": "West Europe",
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[parameters('vnetAddressPrefix')]"
-          ]
-        },
-        "subnets": [
-          {
-            "name": "[parameters('subnetName')]",
-            "properties": {
-              "addressPrefix": "[parameters('subnetAddressPrefix')]"
-              }
-          }
-        ]
-      }
-    },     {
+     {
       "type": "Microsoft.ContainerInstance/containerGroups",
       "apiVersion": "2021-03-01",
       "name": "[concat(parameters('siteName'), '-aci')]",
