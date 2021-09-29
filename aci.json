@@ -81,7 +81,7 @@
           {
             "name": "[concat(parameters('siteName'),'-aci')]",
             "properties": {
-               "image": "docker.io/jayelopia/rating:v1 --image rating:v1",
+               "image": "docker.io/jayelopia/rating:v1",
                "ports": [
                                 {
                                     "protocol": "TCP",
