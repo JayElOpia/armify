@@ -59,9 +59,6 @@
       "apiVersion": "2018-10-01",
       "name": "[concat(parameters('siteName'), '-aci')]",
       "location": "[resourceGroup().location]",
-      "identity": {
-        "type": "SystemAssigned"
-      },
       "properties": {
                "networkProfile": {
                     "id": "[resourceId('Microsoft.Network/networkProfiles', variables('networkProfileName'))]"},
@@ -98,7 +95,7 @@
           }
         ],
         "osType": "Linux",
-        "restartPolicy": "Never"
+        "restartPolicy": "OnFailure"
       }
     },
     {
@@ -128,4 +125,3 @@
     }
   ]
 }
-
